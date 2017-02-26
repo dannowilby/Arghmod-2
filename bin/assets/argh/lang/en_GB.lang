@@ -5,6 +5,7 @@ item.silicon.name=Silicon
 item.wire.name=Wire
 item.arghmetre.name=Arghmetre
 item.drillhead.name=Diamond Drill Head
+item.saber.name=Argh Saber
 
 tile.quarry.name=Quarry
 tile.arghfuel.name=Enriched Fuel Block
