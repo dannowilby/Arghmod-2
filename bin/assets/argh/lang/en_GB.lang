@@ -1,0 +1,23 @@
+item.jetpack.name=Jetpack
+item.sarghFuel.name=Enriched Fuel
+item.masterCircuit.name=Master Circuit
+item.silicon.name=Silicon
+item.wire.name=Wire
+item.arghmetre.name=Arghmetre
+item.drillhead.name=Diamond Drill Head
+
+tile.quarry.name=Quarry
+tile.arghfuel.name=Enriched Fuel Block
+tile.coalGenerator.name=Coal Generator
+tile.box.name=Box
+tile.solarpanel.name=Solar Panel
+tile.itemenerg.name=Item Energiser
+tile.ee.name=Energy Export Node
+tile.ei.name=Energy Import Node
+
+tile.energyConduit.name=Energy Conduit
+tile.fluidConduit.name=Fluid Conduit
+tile.itemConduit.name=Item Conduit
+
+container.box.name=Box
+container.coalGenerator.name=Coal Generator

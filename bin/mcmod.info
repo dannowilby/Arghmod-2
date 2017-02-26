@@ -1,0 +1,16 @@
+[
+{
+  "modid": "argh",
+  "name": "Argh",
+  "description": "A place to say argh.",
+  "version": "",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Daniel"],
+  "credits": "",
+  "logoFile": "assets/argh/textures/logo.jpg",
+  "screenshots": [],
+  "dependencies": []
+}
+]

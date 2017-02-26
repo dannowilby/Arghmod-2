@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "down": "argh:blocks/solarPanelBottom",
+        "up": "argh:blocks/solarPanelTop",
+        "north": "argh:blocks/solarPanelSide",
+        "east": "argh:blocks/solarPanelSide",
+        "south": "argh:blocks/solarPanelSide",
+        "west": "argh:blocks/solarPanelSide",
+        "particle": "argh:blocks/solarPanelSide"
+    }
+}
