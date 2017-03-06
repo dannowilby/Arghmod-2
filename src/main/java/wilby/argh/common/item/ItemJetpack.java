@@ -35,9 +35,10 @@ public class ItemJetpack extends ArghItemArmour
 	
 	public ItemJetpack(String name) 
 	{
-		super(name, mxenergy);
+		super(JETPACK, 2, EntityEquipmentSlot.CHEST, name, mxenergy);
 		this.setMaxDamage(mxenergy);
 		this.setContainerItem(this);
+		
 	}
 	
 	@Override
@@ -74,23 +75,12 @@ public class ItemJetpack extends ArghItemArmour
 	}
 	
 	@Override
-	public boolean isValidArmor(ItemStack stack, EntityEquipmentSlot type, Entity entity)
-	{
-		if(type == EntityEquipmentSlot.CHEST)
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
 	{
-		
 		if(this.getEnergyStored(stack) > 0)
 		{
 			player.jumpMovementFactor = .07f;
-			player.capabilities.allowFlying = true;
+			player.capabilities.allowFlying = true;	
 		}
 		else
 		{
@@ -109,25 +99,14 @@ public class ItemJetpack extends ArghItemArmour
 	@Override
 	public ActionResult onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
-		if(player.isSneaking())
-		{
-			System.out.println(this.getEnergyStored(player.getHeldItem(hand)));
-			if(player.getHeldItem(hand).getDisplayName().equalsIgnoreCase("jetpack"))
-			{
-				this.receiveEnergy(player.getHeldItem(hand), 128, false);
-	
-				return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(EnumHand.MAIN_HAND));
-			}
-		}
-		else
-		{
-			if(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty())
+		
+		if(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty())
 			{
 				player.setItemStackToSlot(EntityEquipmentSlot.CHEST, player.getHeldItem(hand));
 
 				player.setHeldItem(hand, ItemStack.EMPTY);
 			}
-		}
+		
 		return ActionResult.newResult(EnumActionResult.FAIL, player.getHeldItem(EnumHand.MAIN_HAND));
 		
 	}

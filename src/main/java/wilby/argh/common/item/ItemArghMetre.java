@@ -61,19 +61,6 @@ public class ItemArghMetre extends ArghItem
 				}
 				return EnumActionResult.SUCCESS;
 			}
-			if(IEnergyStorage.class.isInstance(world.getTileEntity(pos)))
-			{
-				
-				IEnergyStorage te = (IEnergyStorage)(world.getTileEntity(pos));
-				float p = ((float)te.getEnergyStored()/(float)te.getMaxEnergyStored())*(float)100;
-				System.out.println(te.getEnergyStored());
-				if(!world.isRemote)
-				{
-					player.sendMessage(new TextComponentString(p + "% Full"));
-					player.sendMessage(new TextComponentString(te.getEnergyStored() + "/" + te.getMaxEnergyStored()));
-				}
-				return EnumActionResult.SUCCESS;
-			}
 		}
 		if(player.isSneaking())
 		{
@@ -81,7 +68,7 @@ public class ItemArghMetre extends ArghItem
 			{
 				link = pos;
 				TileEntityImportNode te = (TileEntityImportNode) world.getTileEntity(pos);
-				System.out.println(te.getEnergyStored());
+				System.out.println(te.getEnergyStored(null));
 				return EnumActionResult.SUCCESS;
 			}
 			if(world.getTileEntity(pos) instanceof TileEntityExportNode && link != null)

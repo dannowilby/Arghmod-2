@@ -2,7 +2,6 @@ package wilby.argh.common;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -12,6 +11,7 @@ import wilby.argh.Argh;
 import wilby.argh.api.block.ArghBlock;
 import wilby.argh.api.block.ArghContainerBlock;
 import wilby.argh.common.block.BlockArghFuel;
+import wilby.argh.common.block.BlockBananaPlant;
 import wilby.argh.common.block.BlockBox;
 import wilby.argh.common.block.BlockItemEnergiser;
 import wilby.argh.common.block.BlockQuarry;
@@ -24,6 +24,7 @@ public class ArghBlocks
 	public static ArghContainerBlock quarry;
 	public static ArghContainerBlock itemEnergiser;
 	public static ArghBlock arghFuel;
+	public static ArghBlock bananaPlant;
 	
 	public static void init()
 	{
@@ -35,6 +36,7 @@ public class ArghBlocks
 		itemEnergiser = new BlockItemEnergiser(Material.IRON, "itemenerg");
 		
 		arghFuel = new BlockArghFuel(Material.TNT, "arghfuel");
+		bananaPlant = new BlockBananaPlant(Material.PLANTS, "bananaplant");
 		
 		stack.add(quarry);
 		stack.add(box);

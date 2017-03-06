@@ -45,8 +45,7 @@ public class ArghItems
 		silicon = new ItemSilicon("silicon");
 		arghmetre = new ItemArghMetre("arghmetre");
 		diamondDrillhead = new ItemDiamondDrillHead("drillhead");
-
-		items.add(jetpack);
+		
 		items.add(arghFuel);
 		items.add(masterCircuit);
 		items.add(silicon);
@@ -57,9 +56,25 @@ public class ArghItems
 			GameRegistry.register(item);
 			registerRenders(item);
 		});
+		
 		GameRegistry.register(saber);
+		renderTool(saber);
+		GameRegistry.register(jetpack);
+		renderArmour(jetpack);
 	}
-
+	
+	private static void renderTool(ArghItemTool item)
+	{
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0,
+				new ModelResourceLocation(Argh.MODID + ":" + item.getName(), "inventory"));
+	}
+	
+	private static void renderArmour(ArghItemArmour item)
+	{
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0,
+				new ModelResourceLocation(Argh.MODID + ":" + item.getName(), "inventory"));
+	}
+	
 	private static void registerRenders(ArghItem item)
 	{
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0,

@@ -16,7 +16,7 @@ public class ArghItemTool extends ItemTool implements IEnergyContainerItem
 	int capacity, maxExtract, maxReceive;
 	int energy = 0;
 	String name;
-	public ArghItemTool(String name, int maxEnergy, float efOnBlock,float efOnMob, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn) 
+	public ArghItemTool(String name, int maxEnergy, float efOnBlock, float efOnMob, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn) 
 	{
 		super(efOnBlock, efOnMob, materialIn, effectiveBlocksIn);
 		this.capacity = maxEnergy;

@@ -3,7 +3,11 @@ package wilby.argh.common.transport;
 import java.util.ArrayList;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import wilby.argh.Argh;
 import wilby.argh.api.block.ArghContainerBlock;
 
 public class ArghTransport
@@ -27,5 +31,9 @@ public class ArghTransport
 		blocks.forEach((block) -> {
 			GameRegistry.registerWithItem(block);
 		});
+		
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(ienode), 0, new ModelResourceLocation(Argh.MODID + ":" + "ei", "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(eenode), 0, new ModelResourceLocation(Argh.MODID + ":" + "ee", "inventory"));
+		
 	}
 }

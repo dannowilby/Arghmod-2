@@ -4,24 +4,34 @@ import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import wilby.argh.Initialisation;
 
-public class ArghItemArmour extends ArghItem implements IEnergyContainerItem
+public class ArghItemArmour extends ItemArmor implements IEnergyContainerItem
 {
 	int capacity, maxExtract, maxReceive;
 	int energy = 0;
-	public ArghItemArmour(String name, int maxEnergy) 
+	String name;
+	public ArghItemArmour(ItemArmor.ArmorMaterial a, int render, EntityEquipmentSlot slot, String name, int maxEnergy) 
 	{
-		super(name);
+		super(a, render, slot);
 		this.capacity = maxEnergy;
 		this.maxReceive = maxEnergy;
 		this.maxExtract = maxEnergy;
+		this.name = name;
 		this.setMaxStackSize(1);
+		this.name = name;
+		this.setRegistryName(name);
+		this.setUnlocalizedName(name);
+		this.setCreativeTab(Initialisation.arghTab);
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	@Override

@@ -6,7 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import wilby.argh.common.gui.container.ContainerBox;
+import wilby.argh.common.gui.container.ContainerItemEnergiser;
 import wilby.argh.common.tileentity.TileEntityBox;
+import wilby.argh.common.tileentity.TileEntityItemEnergiser;
 
 public class ArghGuiHandler implements IGuiHandler
 {
@@ -22,6 +24,10 @@ public class ArghGuiHandler implements IGuiHandler
 			TileEntityBox tileEntityInventoryBasic = (TileEntityBox) tileEntity;
 			return new ContainerBox(player.inventory, tileEntityInventoryBasic);
 		}
+		if (tileEntity instanceof TileEntityItemEnergiser) {
+			TileEntityItemEnergiser tileEntityInventoryBasic = (TileEntityItemEnergiser) tileEntity;
+			return new ContainerItemEnergiser(player.inventory, tileEntityInventoryBasic);
+		}
 		return null;
 	}
 
@@ -36,6 +42,10 @@ public class ArghGuiHandler implements IGuiHandler
 		if (tileEntity instanceof TileEntityBox) {
 			TileEntityBox tileEntityInventoryBasic = (TileEntityBox) tileEntity;
 			return new GuiBox(player.inventory, tileEntityInventoryBasic);
+		}
+		if (tileEntity instanceof TileEntityItemEnergiser) {
+			TileEntityItemEnergiser tileEntityInventoryBasic = (TileEntityItemEnergiser) tileEntity;
+			return new GuiItemEnergiser(player.inventory, tileEntityInventoryBasic);
 		}
 		return null;
 	}

@@ -20,5 +20,8 @@ tile.energyConduit.name=Energy Conduit
 tile.fluidConduit.name=Fluid Conduit
 tile.itemConduit.name=Item Conduit
 
+tile.bananaplant=Banana Plant
+
 container.box.name=Box
 container.coalGenerator.name=Coal Generator
+container.itemenerg.name=Item Energiser
