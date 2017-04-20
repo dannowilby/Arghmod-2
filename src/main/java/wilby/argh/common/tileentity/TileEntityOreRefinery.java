@@ -12,8 +12,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
+import wilby.argh.common.block.BlockOreProcessorController;
 
-public class TileEntityOreRefinery extends TileEntity implements IEnergyReceiver, IFluidTank, ITickable, IInventory {
+public class TileEntityOreRefinery extends TileEntity implements IEnergyReceiver, IInventory, IFluidTank, ITickable {
 
 	public EnergyStorage es = new EnergyStorage(128000);
 	public FluidTank ft = new FluidTank(16000);
@@ -180,9 +181,21 @@ public class TileEntityOreRefinery extends TileEntity implements IEnergyReceiver
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() 
+	{
+		if(world.getWorldTime() % 20 == 0)
+			formMultiblock();
+	}
+	
+	public boolean formMultiblock() 
+	{
+		if(world.getBlockState(pos).getBlock() instanceof BlockOreProcessorController)
+		{
+			System.out.println(world.getBiome(pos).getBiomeName());
+			return true;
+		}
 		
+		return false;
 	}
 
 }

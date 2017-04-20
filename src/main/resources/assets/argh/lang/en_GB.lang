@@ -1,4 +1,6 @@
-item.jetpack.name=Jetpack
+item.enforcedJetpack.name=Jetpack
+item.hardenedJetpack.name=Jetpack
+item.resonantJetpack.name=Jetpack
 item.sarghFuel.name=Enriched Fuel
 item.masterCircuit.name=Master Circuit
 item.silicon.name=Silicon
@@ -6,6 +8,10 @@ item.wire.name=Wire
 item.arghmetre.name=Arghmetre
 item.drillhead.name=Diamond Drill Head
 item.saber.name=Argh Saber
+item.ediamond.name=Energised Diamond
+item.manual.name=Argh Manual
+item.banana.name=Banana
+item.molyIngot.name=Technetium Ingot
 
 tile.quarry.name=Quarry
 tile.arghfuel.name=Enriched Fuel Block
@@ -13,6 +19,8 @@ tile.coalGenerator.name=Coal Generator
 tile.box.name=Box
 tile.solarpanel.name=Solar Panel
 tile.itemenerg.name=Item Energiser
+tile.opc.name=Ore Refinery Controller
+item.mob.name=Monster Spawner
 tile.ee.name=Energy Export Node
 tile.ei.name=Energy Import Node
 
@@ -20,7 +28,8 @@ tile.energyConduit.name=Energy Conduit
 tile.fluidConduit.name=Fluid Conduit
 tile.itemConduit.name=Item Conduit
 
-tile.bananaplant=Banana Plant
+tile.bananaplant.name=Banana Plant Sapling
+tile.moly.name=Technetium Ore
 
 container.box.name=Box
 container.coalGenerator.name=Coal Generator

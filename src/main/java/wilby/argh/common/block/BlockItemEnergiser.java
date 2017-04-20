@@ -10,12 +10,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wilby.api.ArghContainerBlock;
 import wilby.argh.Argh;
-import wilby.argh.api.block.ArghContainerBlock;
-import wilby.argh.common.ArghItems;
+import wilby.argh.Reference;
 import wilby.argh.common.gui.ArghGuiHandler;
 import wilby.argh.common.tileentity.TileEntityItemEnergiser;
-import wilby.argh.common.tileentity.TileEntityQuarry;
 
 public class BlockItemEnergiser extends ArghContainerBlock
 {
@@ -74,7 +73,7 @@ public class BlockItemEnergiser extends ArghContainerBlock
 		// Uses the gui handler registered to your mod to open the gui for the given gui id
 		// open on the server side only  (not sure why you shouldn't open client side too... vanilla doesn't, so we better not either)
 		if (worldIn.isRemote) return true;
-		if(!playerIn.getHeldItem(hand).getItem().equals(ArghItems.arghmetre))
+		if(!playerIn.getHeldItem(hand).getItem().equals(Reference.arghmetre))
 		{
 			playerIn.openGui(Argh.argh, ArghGuiHandler.getGuiId(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;

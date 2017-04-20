@@ -6,13 +6,17 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import cofh.api.energy.IEnergyStorage;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import wilby.argh.common.util.ArghUtil;
 
 public class TileEntitySolarPanel extends TileEntity implements IEnergyProvider, ITickable {
 
@@ -77,34 +81,39 @@ public class TileEntitySolarPanel extends TileEntity implements IEnergyProvider,
 	@Override
 	public void update() 
 	{
-		
-		if(world.getWorldTime() % 20 == 0)
+		if(this.world.getWorldTime() % 5 == 0)
 		{
 			sky = canSeeSky(pos);
 			this.world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
+			
 		checkForMachines();
-		linkedMachines.forEach((p) -> {
+		for(int l = 0; l < linkedMachines.size(); l++)
+		{
+		
 			if(this.getEnergyStored(null) > 128)
 			{
-				if(IEnergyReceiver.class.isInstance(world.getTileEntity(p)))
+				if(IEnergyReceiver.class.isInstance(world.getTileEntity(linkedMachines.get(l))))
 				{
-					IEnergyReceiver ier = (IEnergyReceiver) world.getTileEntity(p);
-					if(((double)ier.getEnergyStored(null)/(double)ier.getMaxEnergyStored(null)) < (double)1.0)
-						ier.receiveEnergy(null, this.extractEnergy(null, 128, false), false);
+					IEnergyReceiver ier = (IEnergyReceiver) world.getTileEntity(linkedMachines.get(l));
+					EnumFacing a = ArghUtil.nrgRelative(linkedMachines.get(l), pos);
+					if(((double)ier.getEnergyStored(a)/(double)ier.getMaxEnergyStored(a)) < (double)1.0 && ier.canConnectEnergy(a))
+						ier.receiveEnergy(a, this.extractEnergy(null, 128, false), false);
 				}
-				if(IEnergyStorage.class.isInstance(world.getTileEntity(p)))
+				if(IEnergyStorage.class.isInstance(world.getTileEntity(linkedMachines.get(l))))
 				{
-					IEnergyStorage ier = (IEnergyStorage) world.getTileEntity(p);
+					IEnergyStorage ier = (IEnergyStorage) world.getTileEntity(linkedMachines.get(l));
 					if(((double)ier.getEnergyStored()/(double)ier.getMaxEnergyStored()) < (double)1.0)
 						ier.receiveEnergy(this.extractEnergy(null, 128, false), false);
 				}
 			}
-		});
+		}
 		
 		if(world.isDaytime() && sky && !world.isRaining() && !world.isThundering())
 			storage.modifyEnergyStored(80);
 	}
+	
+	
 	
 	private void checkForMachines() 
 	{

@@ -14,8 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import wilby.api.ArghContainerBlock;
 import wilby.argh.Argh;
-import wilby.argh.api.block.ArghContainerBlock;
 import wilby.argh.common.gui.ArghGuiHandler;
 import wilby.argh.common.tileentity.TileEntityBox;
 

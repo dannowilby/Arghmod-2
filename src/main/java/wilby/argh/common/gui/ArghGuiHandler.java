@@ -9,6 +9,7 @@ import wilby.argh.common.gui.container.ContainerBox;
 import wilby.argh.common.gui.container.ContainerItemEnergiser;
 import wilby.argh.common.tileentity.TileEntityBox;
 import wilby.argh.common.tileentity.TileEntityItemEnergiser;
+import wilby.manual.GuiManual;
 
 public class ArghGuiHandler implements IGuiHandler
 {
@@ -34,9 +35,17 @@ public class ArghGuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID != getGuiId()) {
-			System.err.println("Invalid ID: expected " + getGuiId() + ", received " + ID);
+			if(ID != 69)
+			{
+				System.err.println("Invalid ID: expected " + getGuiId() + ", received " + ID);
+			}
 		}
-
+		
+		if(ID == 69)
+		{
+			return new GuiManual(player, player.getHeldItemMainhand());
+		}
+		
 		BlockPos xyz = new BlockPos(x, y, z);
 		TileEntity tileEntity = world.getTileEntity(xyz);
 		if (tileEntity instanceof TileEntityBox) {

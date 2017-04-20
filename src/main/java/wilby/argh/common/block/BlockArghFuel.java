@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wilby.argh.api.block.ArghBlock;
+import wilby.api.ArghBlock;
 
 public class BlockArghFuel extends ArghBlock 
 {

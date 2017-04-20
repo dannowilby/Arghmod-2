@@ -7,8 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -16,8 +16,10 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import wilby.api.ArghItemArmour;
+import wilby.api.ArghTier;
 import wilby.argh.Argh;
-import wilby.argh.api.item.ArghItemArmour;
+import wilby.argh.common.util.ArghUtil;
 
 public class ItemJetpack extends ArghItemArmour
 {
@@ -29,27 +31,38 @@ public class ItemJetpack extends ArghItemArmour
 	public final static SoundEvent soundOnEquipt = SoundEvents.BLOCK_ANVIL_HIT;
 	public static final float toughness = 1.0f;
 	
-	public static final int mxenergy = 16334;
-	
 	public static ArmorMaterial JETPACK = EnumHelper.addArmorMaterial(jetpackName, jetpackName, durability, reductionAmounts, enchantability, soundOnEquipt, toughness);
 	
-	public ItemJetpack(String name) 
+	public ArghTier at;
+	
+	public ItemJetpack(String name, ArghTier t, int maxEnergy) 
 	{
-		super(JETPACK, 2, EntityEquipmentSlot.CHEST, name, mxenergy);
-		this.setMaxDamage(mxenergy);
-		this.setContainerItem(this);
-		
+		super(JETPACK, 2, EntityEquipmentSlot.CHEST, name, t);
+		at = t;
 	}
 	
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
 	{
-		this.setDamage(stack, this.getMaxEnergyStored(stack) - this.getEnergyStored(stack));
+		int t = this.getMaxEnergyStored(stack) - this.getEnergyStored(stack);
+		this.setDamage(stack, t);
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
 	{
+		if(ArghTier.TIER1.equals(at))
+		{
+			tooltip.add(TextFormatting.GOLD + at.getDisplayName());
+		}
+		if(ArghTier.TIER2.equals(at))
+		{
+			tooltip.add(TextFormatting.GRAY + at.getDisplayName());
+		}
+		if(ArghTier.TIER3.equals(at))
+		{
+			tooltip.add(TextFormatting.AQUA + at.getDisplayName());
+		}
 		
 		if(GuiScreen.isShiftKeyDown())
 		{
@@ -77,19 +90,69 @@ public class ItemJetpack extends ArghItemArmour
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
 	{
-		if(this.getEnergyStored(stack) > 0)
+		if(at.equals(ArghTier.TIER1))
 		{
-			player.jumpMovementFactor = .07f;
-			player.capabilities.allowFlying = true;	
+			if(this.getEnergyStored(stack) > 0)
+			{
+				player.jumpMovementFactor = .07f;
+				player.capabilities.allowFlying = true;	
+			}
+			else
+			{
+				player.jumpMovementFactor = .02f;
+				if(player.isCreative())
+				{
+					player.capabilities.allowFlying = false;
+					player.capabilities.isFlying = false;
+					player.capabilities.setFlySpeed(.05f);
+					player.capabilities.setPlayerWalkSpeed(.1f);
+				}
+			}
 		}
-		else
+		if(at.equals(ArghTier.TIER2))
 		{
-			player.jumpMovementFactor = .02f;
-			player.capabilities.allowFlying = false;
-			player.capabilities.isFlying = false;
+			if(this.getEnergyStored(stack) > 0)
+			{
+				player.jumpMovementFactor = .07f;
+				player.capabilities.allowFlying = true;
+				player.capabilities.setPlayerWalkSpeed(1.0f);
+				player.capabilities.setFlySpeed(.1f);
+			}
+			else
+			{
+				player.jumpMovementFactor = .02f;
+				if(player.isCreative())
+				{
+					player.capabilities.allowFlying = false;
+					player.capabilities.isFlying = false;
+					player.capabilities.setFlySpeed(.05f);
+					player.capabilities.setPlayerWalkSpeed(.1f);
+				}
+			}
+		}
+		if(at.equals(ArghTier.TIER3))
+		{
+			if(this.getEnergyStored(stack) > 0)
+			{
+				player.jumpMovementFactor = .07f;
+				player.capabilities.allowFlying = true;
+				player.capabilities.setPlayerWalkSpeed(1.5f);
+				player.capabilities.setFlySpeed(.5f);
+			}
+			else
+			{
+				player.jumpMovementFactor = .02f;
+				if(player.isCreative())
+				{
+					player.capabilities.allowFlying = false;
+					player.capabilities.isFlying = false;
+					player.capabilities.setFlySpeed(.05f);
+					player.capabilities.setPlayerWalkSpeed(.1f);
+				}
+			}
 		}
 		
-		if(!player.onGround && world.getWorldTime() % 60 == 0)
+		if(player.capabilities.isFlying)
 		{
 			
 			this.extractEnergy(stack, 64, false);
@@ -110,5 +173,4 @@ public class ItemJetpack extends ArghItemArmour
 		return ActionResult.newResult(EnumActionResult.FAIL, player.getHeldItem(EnumHand.MAIN_HAND));
 		
 	}
-	
 }

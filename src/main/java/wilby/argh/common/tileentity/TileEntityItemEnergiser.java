@@ -7,6 +7,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +20,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import wilby.argh.Reference;
 
 public class TileEntityItemEnergiser extends TileEntity implements IEnergyReceiver, IEnergyProvider, ITickable, IInventory
 {
@@ -37,24 +39,36 @@ public class TileEntityItemEnergiser extends TileEntity implements IEnergyReceiv
 	@Override
 	public void update()
 	{
-		if(world.getWorldTime() % 20 == 0)
-		{
+		if(this.world.getWorldTime() % 5 == 0)
 			this.world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
-		}
+		
 		if(!world.isRemote)
 		{
-			if(IEnergyContainerItem.class.isInstance(this.getStackInSlot(0).getItem()) && this.getStackInSlot(1).isEmpty())
+			if(this.getStackInSlot(1).isEmpty())
 			{
-				IEnergyContainerItem ieci = (IEnergyContainerItem) this.getStackInSlot(0).getItem();
-				if(this.getEnergyStored(null) >= 1280)
+				if(IEnergyContainerItem.class.isInstance(this.getStackInSlot(0).getItem()))
 				{
-				int i = this.extractEnergy(null, 1280, false);
-				int q = ieci.receiveEnergy(this.getStackInSlot(0), 1280, false);
+					IEnergyContainerItem ieci = (IEnergyContainerItem) this.getStackInSlot(0).getItem();
+					if(this.getEnergyStored(null) >= 1280)
+					{
+					int i = this.extractEnergy(null, 1280, false);
+					int q = ieci.receiveEnergy(this.getStackInSlot(0), 1280, false);
+					}
+					if(ieci.getEnergyStored(this.getStackInSlot(0)) == ieci.getMaxEnergyStored(this.getStackInSlot(0)))
+					{
+						this.itemStacks[1] = this.getStackInSlot(0);
+						this.itemStacks[0] = ItemStack.EMPTY;
+					}
 				}
-				if(ieci.getEnergyStored(this.getStackInSlot(0)) == ieci.getMaxEnergyStored(this.getStackInSlot(0)))
+			
+			}
+			if(this.getStackInSlot(0).getItem().equals(Items.DIAMOND) && (this.getStackInSlot(1).isEmpty() || this.getStackInSlot(1) == new ItemStack(Reference.ediamond)))
+			{
+				if(this.getEnergyStored(null) == this.getMaxEnergyStored(null))
 				{
-					this.itemStacks[1] = this.getStackInSlot(0);
-					this.itemStacks[0] = ItemStack.EMPTY;
+					int i = this.extractEnergy(null, this.getMaxEnergyStored(null), false);
+					this.itemStacks[0].setCount(this.itemStacks[0].getCount()-1);
+					this.itemStacks[1] = new ItemStack(Reference.ediamond, this.itemStacks[1].getCount()+1);
 				}
 			}
 		}

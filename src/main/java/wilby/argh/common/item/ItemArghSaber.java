@@ -31,7 +31,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wilby.argh.api.item.ArghItemTool;
+import wilby.api.ArghItemTool;
 
 public class ItemArghSaber extends ArghItemTool 
 {

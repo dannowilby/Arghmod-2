@@ -1,6 +1,6 @@
 package wilby.argh.common.item;
 
-import wilby.argh.api.item.ArghItem;
+import wilby.api.ArghItem;
 
 public class ItemDiamondDrillHead extends ArghItem 
 {

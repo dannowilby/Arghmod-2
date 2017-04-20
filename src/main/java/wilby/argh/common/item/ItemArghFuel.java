@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import wilby.argh.api.item.ArghItem;
+import wilby.api.ArghItem;
 
 public class ItemArghFuel extends ArghItem 
 {

@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "down": "argh:blocks/itemenerg",
+        "up": "argh:blocks/itemenerg",
+        "north": "argh:blocks/itemenerg",
+        "east": "argh:blocks/itemenerg",
+        "south": "argh:blocks/itemenerg",
+        "west": "argh:blocks/itemenerg",
+        "particle": "argh:blocks/itemenerg"
+    }
+}

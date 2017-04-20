@@ -14,9 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import wilby.argh.api.item.ArghItem;
-import wilby.argh.common.transport.TileEntityExportNode;
-import wilby.argh.common.transport.TileEntityImportNode;
+import wilby.api.ArghItem;
+import wilby.argh.common.tileentity.TileEntityExportNode;
+import wilby.argh.common.tileentity.TileEntityImportNode;
 
 public class ItemArghMetre extends ArghItem 
 {
@@ -52,8 +52,8 @@ public class ItemArghMetre extends ArghItem
 			{
 				
 				IEnergyHandler te = (IEnergyHandler)(world.getTileEntity(pos));
-				float p = ((float)te.getEnergyStored(null)/(float)te.getMaxEnergyStored(null))*(float)100;
-				System.out.println(te.getEnergyStored(null));
+				float p = ((float)te.getEnergyStored(facing)/(float)te.getMaxEnergyStored(facing))*(float)100;
+				System.out.println(te.getEnergyStored(facing));
 				if(!world.isRemote)
 				{
 					player.sendMessage(new TextComponentString(p + "% Full"));
@@ -68,7 +68,7 @@ public class ItemArghMetre extends ArghItem
 			{
 				link = pos;
 				TileEntityImportNode te = (TileEntityImportNode) world.getTileEntity(pos);
-				System.out.println(te.getEnergyStored(null));
+				System.out.println(te.getEnergyStored(facing));
 				return EnumActionResult.SUCCESS;
 			}
 			if(world.getTileEntity(pos) instanceof TileEntityExportNode && link != null)

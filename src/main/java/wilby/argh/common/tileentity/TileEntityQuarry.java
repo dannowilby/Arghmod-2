@@ -15,7 +15,6 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import wilby.argh.common.ArghBlocks;
 
 public class TileEntityQuarry extends TileEntity implements ITickable, IEnergyReceiver {
 	int y = 1;
@@ -29,11 +28,10 @@ public class TileEntityQuarry extends TileEntity implements ITickable, IEnergyRe
 	
 	@Override
 	public void update() {
-		
 		if(storage.getEnergyStored() > mineEnergy && world.getWorldTime() % Math.ceil(((double)5/getModifier())) == 0 && !(world.isBlockIndirectlyGettingPowered(pos) > 0) && !mined)
 		{
 			
-			dig(5, 5);
+			dig(5, 5, false);
 			mining = true;
 		}
 		if(storage.getEnergyStored() <= 0 || world.isBlockIndirectlyGettingPowered(pos) > 0 || mined)
@@ -68,7 +66,7 @@ public class TileEntityQuarry extends TileEntity implements ITickable, IEnergyRe
 		return new int[]{currentX, y, currentZ};
 	}
 	
-	public void dig(int rangeX, int rangeY) {
+	public void dig(int rangeX, int rangeY, boolean simulate) {
 
 			if (currentX <= minX && currentX >= maxX) {
 
@@ -79,11 +77,12 @@ public class TileEntityQuarry extends TileEntity implements ITickable, IEnergyRe
 						mined = true;
 					}
 					Block b = world.getBlockState(a).getBlock();
-					if (b != Blocks.BEDROCK) {
+					if (b != Blocks.BEDROCK && !simulate) {
 						world.setBlockToAir(a);
 						addToInventory(new BlockPos(pos.getX(), pos.getY()+1, pos.getZ()), b);
 					}
-					storage.modifyEnergyStored(-mineEnergy);
+					if(!simulate)
+						storage.modifyEnergyStored(-mineEnergy);
 					currentZ--;
 					return;
 				}

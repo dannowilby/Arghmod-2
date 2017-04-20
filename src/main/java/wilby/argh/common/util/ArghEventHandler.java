@@ -1,16 +1,16 @@
 package wilby.argh.common.util;
 
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import wilby.argh.common.ArghItems;
-import wilby.argh.common.enchantment.ArghEnchantments;
+import wilby.argh.Reference;
 
 public class ArghEventHandler 
 {
@@ -22,8 +22,11 @@ public class ArghEventHandler
 		if(be.player.world.getWorldTime() % 20 == 0)
 		{
 			
-			if(!be.player.isCreative() && !be.player.inventory.armorItemInSlot(2).getDisplayName().equalsIgnoreCase("jetpack"))
+			if(!be.player.isCreative())
 			{
+				
+				if(!be.player.inventory.armorItemInSlot(2).getUnlocalizedName().substring(5).equalsIgnoreCase(Reference.resonantJetpack.getName()) || !be.player.inventory.armorItemInSlot(2).getUnlocalizedName().substring(5).equalsIgnoreCase(Reference.enforcedJetpack.getName()) || !be.player.inventory.armorItemInSlot(2).getUnlocalizedName().substring(5).equalsIgnoreCase(Reference.hardenedJetpack.getName()))
+				
 				be.player.capabilities.allowFlying = false;
 				be.player.capabilities.isFlying = false;
 				be.player.jumpMovementFactor = .02f;
@@ -34,14 +37,14 @@ public class ArghEventHandler
 		{
 			ItemStack item = be.player.inventory.getCurrentItem();
 			
-			if(EnchantmentHelper.getEnchantments(item).get(ArghEnchantments.repair) != null)		
+			if(EnchantmentHelper.getEnchantments(item).get(Reference.repair) != null)		
 			{
-				if(EnchantmentHelper.getEnchantments(item).get(ArghEnchantments.repair) == 1)		
+				if(EnchantmentHelper.getEnchantments(item).get(Reference.repair) == 1)		
 				{
 					item.getItem().setDamage(item, item.getItemDamage() - 1);	
 				}
 					
-				if(EnchantmentHelper.getEnchantments(item).get(ArghEnchantments.repair) == 2)		
+				if(EnchantmentHelper.getEnchantments(item).get(Reference.repair) == 2)		
 				{
 					item.getItem().setDamage(item, item.getItemDamage() - 2);
 				}
@@ -53,14 +56,54 @@ public class ArghEventHandler
 	@SubscribeEvent
 	public void Break(BlockEvent.BreakEvent be)
 	{
-		ItemStack item = be.getPlayer().inventory.getCurrentItem();
 		
-		if(EnchantmentHelper.getEnchantments(item).get(ArghEnchantments.silk) != null)		
-		{
-			if(Block.isEqualTo(be.getState().getBlock(), Blocks.MOB_SPAWNER))
+			ItemStack item = be.getPlayer().inventory.getCurrentItem();
+			if(EnchantmentHelper.getEnchantments(item).get(Reference.silk) != null)		
 			{
-				EntityItem ei = new EntityItem(be.getWorld(), be.getPos().getX(), be.getPos().getY(), be.getPos().getZ(), new ItemStack(Item.getItemFromBlock(Blocks.MOB_SPAWNER)));
-				be.getWorld().spawnEntity(ei);
+				
+				if(be.getWorld().getTileEntity(be.getPos()) instanceof TileEntityMobSpawner)
+				{
+					TileEntityMobSpawner tes = (TileEntityMobSpawner) be.getWorld().getTileEntity(be.getPos());
+					NBTTagCompound nbt = new NBTTagCompound();
+				
+					NBTTagCompound b = tes.writeToNBT(nbt);
+					
+					ItemStack a = new ItemStack(Reference.mob);
+					
+					a.setTagCompound(b);
+					
+					EntityItem i = new EntityItem(be.getWorld(), be.getPos().getX(), be.getPos().getY(), be.getPos().getZ(), a);
+					be.getWorld().spawnEntity(i);
+				}
+				 
+			}
+		
+	}
+	
+	@SubscribeEvent
+	public void steal(LivingHurtEvent e)
+	{
+		if(e.getSource().getEntity() instanceof EntityPlayer)
+		{
+			
+			EntityPlayer player = (EntityPlayer) e.getSource().getEntity();
+			
+			if(EnchantmentHelper.getEnchantments(player.getHeldItem(player.getActiveHand())).get(Reference.steal) != null)
+			{
+				int i = EnchantmentHelper.getEnchantments(player.getHeldItem(player.getActiveHand())).get(Reference.steal);
+				
+				switch(i)
+				{
+					case 1:
+						player.heal(1);
+					case 2:
+						player.heal(2);
+					case 3:
+						player.heal(3);
+					case 4:
+						player.heal(4);
+					default:
+				}
 			}
 		}
 	}

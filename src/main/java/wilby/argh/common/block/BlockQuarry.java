@@ -8,7 +8,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wilby.argh.api.block.ArghContainerBlock;
+import wilby.api.ArghContainerBlock;
 import wilby.argh.common.tileentity.TileEntityQuarry;
 
 public class BlockQuarry extends ArghContainerBlock
